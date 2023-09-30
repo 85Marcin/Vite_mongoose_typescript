@@ -5,7 +5,7 @@ import { nanoid } from "nanoid"
 
 function App() {
   const [people, setPeople] = useState<{ _id: ObjectId; name: string }[]>([])
-  const [newPersonName, setNewPersonName] = useState<string>("") // State variable for the new person's name
+  const [newPersonName, setNewPersonName] = useState<string>("") //
 
   useEffect(() => {
     const fetchPeople = async () => {
@@ -18,25 +18,34 @@ function App() {
       }
     }
     fetchPeople()
-  }, [people])
+  }, [])
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     // Update the new person's name as the user types
     setNewPersonName(e.target.value)
   }
 
+  const handleDelete = async (id: any) => {
+    try {
+      await axios.delete(`http://localhost:8000/api/people/${id}`)
+      const nextPeople = people.filter((person) => person._id !== id)
+      setPeople(nextPeople)
+    } catch (error) {
+      console.error("Error deleting :", error)
+    }
+  }
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault() // Prevent the default form submission behavior
+    e.preventDefault()
 
     try {
-      // Send a POST request to add the new person
       const response = await axios.post("http://localhost:8000/api/people", {
         name: newPersonName,
       })
 
       const newPerson = response.data
       setPeople([...people, newPerson])
-      setNewPersonName("") // Clear the input field
+      setNewPersonName("")
     } catch (error) {
       console.error("Error adding a new person:", error)
     }
@@ -57,7 +66,8 @@ function App() {
       <ul>
         {people.map((person) => (
           <li key={nanoid()}>
-            {person.name} <button>delete</button>
+            {person.name}
+            <button onClick={() => handleDelete(person._id)}>delete</button>
           </li>
         ))}
       </ul>

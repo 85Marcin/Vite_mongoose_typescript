@@ -80,7 +80,7 @@ app.post("/api/people", (req, res) => __awaiter(void 0, void 0, void 0, function
         const { name } = req.body;
         const newPerson = new Person({ name });
         yield newPerson.save();
-        res.json({ message: "Person added succefully" });
+        res.status(201).json(newPerson);
     }
     catch (error) {
         console.log(error);

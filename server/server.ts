@@ -50,7 +50,7 @@ app.post("/api/people", async (req, res) => {
     const { name } = req.body
     const newPerson = new Person({ name })
     await newPerson.save()
-    res.json({ message: "Person added succefully" })
+    res.status(201).json(newPerson)
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: "Error adding person" })
