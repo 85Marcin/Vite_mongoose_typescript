@@ -21,7 +21,6 @@ function App() {
   }, [])
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // Update the new person's name as the user types
     setNewPersonName(e.target.value)
   }
 
@@ -53,21 +52,32 @@ function App() {
 
   return (
     <div className="App">
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-md p-4 mx-auto bg-white rounded shadow-lg"
+      >
         <input
           type="text"
-          placeholder="Enter a new person's name"
+          placeholder="Enter a name"
           value={newPersonName}
           onChange={handleNameChange}
+          className="mr-5"
         />
-        <button type="submit">Add Person</button>
+        <button type="submit" className="">
+          Add Person
+        </button>
       </form>
       <h1 className="text-5xl">List of People</h1>
-      <ul>
+      <ul className="flex flex-col">
         {people.map((person) => (
-          <li key={nanoid()}>
+          <li key={nanoid()} className="flex items-center gap-2 my-2 text-xl">
             {person.name}
-            <button onClick={() => handleDelete(person._id)}>delete</button>
+            <button
+              onClick={() => handleDelete(person._id)}
+              className="p-1 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+            >
+              delete
+            </button>
           </li>
         ))}
       </ul>
