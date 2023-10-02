@@ -24,7 +24,7 @@ function App() {
     setNewPersonName(e.target.value)
   }
 
-  const handleDelete = async (id: any) => {
+  const handleDelete = async (id: ObjectId) => {
     try {
       await axios.delete(`http://localhost:8000/api/people/${id}`)
       const nextPeople = people.filter((person) => person._id !== id)
@@ -36,6 +36,7 @@ function App() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (!newPersonName) return
 
     try {
       const response = await axios.post("http://localhost:8000/api/people", {
