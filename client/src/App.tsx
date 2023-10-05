@@ -37,7 +37,6 @@ function App() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!newPersonName) return
-
     try {
       const response = await axios.post("http://localhost:8000/api/people", {
         name: newPersonName,
@@ -77,7 +76,7 @@ function App() {
               onClick={() => handleDelete(person._id)}
               className="p-1 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
             >
-              delete
+              remove
             </button>
           </li>
         ))}
